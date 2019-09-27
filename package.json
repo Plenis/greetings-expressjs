@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.3.3"
   },
-  "devDependencies": {},
-  "description": ""
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
 }
