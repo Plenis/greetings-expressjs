@@ -1,0 +1,23 @@
+a {
+    text-decoration-line: underline;
+    color: blueviolet;
+}
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 375%;
+    text-align: center;
+    
+}
+
+form{
+text-align: center;
+font-size: 125%;
+font-family: 'Times New Roman', Times, serif;
+width: 300px;
+height: 100px;
+padding: 50px;
+float: initial;
+}
+img{
+width: 100%;
+}
