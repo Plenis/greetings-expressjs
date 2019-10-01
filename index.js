@@ -27,13 +27,15 @@ app.use(bodyParser.json());
 app.get("/", function(req, res) {
  console.log(req.body);
   const counter = greetings.nameCounter();
-  const msg = greetings.errorMsg();
-  res.render("index", { greetedNames, counter, msg });
+
+  res.render("index", { 
+      greetedNames, 
+      counter
+    });
 });
 
 
 app.post("/greeting", function(req, res){
-
 
      var personName = req.body.personsName;
      var myLang = req.body.myLang;
@@ -42,6 +44,7 @@ app.post("/greeting", function(req, res){
      greetedNames = greetDisplay
 
     res.redirect("/")
+    
 })
 
 const PORT = process.env.PORT || 5080;

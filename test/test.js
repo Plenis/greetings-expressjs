@@ -46,4 +46,12 @@ describe('greet' , function(){
         assert.equal(6, input.nameCounter());
     })
 
+    it('should count duplicated name entries as one' , function(){
+        let input = greetingOpp();
+        input.greet('Sino')
+        input.greet('Sino')
+        input.greet('Sino')
+        assert.equal(1, input.nameCounter());
+    })
+
 });

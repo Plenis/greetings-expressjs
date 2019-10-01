@@ -17,7 +17,7 @@ function greetingOpp(nameList) {
     } else if (lang === "Afrikaans") {
       return "Awe, " + firstLetterUpperCase + "!";
     } else {
-      return "Please select language";
+      return "Please enter a name or select a language!";
     }
   }
 
@@ -30,19 +30,10 @@ function greetingOpp(nameList) {
     return greetedNames;
   }
 
-  function errorMsg(lang) {
-    var errmsg = lang;
-    if (errmsg === "" && lang !== false) {
-      return "Please enter a name or select a language!";
-    }
-  }
-
-
   return {
     greet,
     storedNames,
-    nameCounter,
-    errorMsg
+    nameCounter
   };
 }
 
