@@ -47,7 +47,7 @@ app.post("/greeting", function(req, res){
     
 })
 
-const PORT = process.env.PORT || 5080;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);
