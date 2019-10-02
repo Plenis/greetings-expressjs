@@ -7,7 +7,7 @@ function greetingOpp(nameList) {
     if (greetedNames[firstLetterUpper] === undefined) {
       greetedNames[firstLetterUpper] = 1;
     } else {
-      greetedNames[firstLetterUpper]++;  
+      greetedNames[firstLetterUpper]++;
     }
 
     if (lang === "isiXhosa") {

@@ -25,27 +25,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", function(req, res) {
- console.log(req.body);
+  console.log(req.body);
   const counter = greetings.nameCounter();
 
-  res.render("index", { 
-      greetedNames, 
-      counter
-    });
+  res.render("index", {
+    greetedNames,
+    counter
+  });
 });
 
+app.post("/greeting", function(req, res) {
+  var personName = req.body.personsName;
+  var myLang = req.body.myLang;
+  const greetDisplay = greetings.greet(personName, myLang);
 
-app.post("/greeting", function(req, res){
+  greetedNames = greetDisplay;
 
-     var personName = req.body.personsName;
-     var myLang = req.body.myLang;
-     const greetDisplay = greetings.greet(personName, myLang);
-
-     greetedNames = greetDisplay
-
-    res.redirect("/")
-    
-})
+  res.redirect("/");
+});
 
 const PORT = process.env.PORT || 5000;
 
