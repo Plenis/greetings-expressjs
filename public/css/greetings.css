@@ -21,3 +21,10 @@ float: initial;
 img{
 width: 100%;
 }
+
+.info{
+    color: crimson; 
+}
+#greeting-text{
+    font-size: 40px;
+}
