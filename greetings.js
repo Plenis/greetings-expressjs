@@ -5,8 +5,11 @@ function greetingOpp() {
   function greet(name, lang) {
     var firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
     // var firstLetterUpper = name.toUpperCase();
-    if (greetedNames[firstLetterUpperCase] === "") {
-      return 0;
+    if(!name || !lang ){
+      return;
+    }
+    if (greetedNames[firstLetterUpperCase] === undefined) {
+      greetedNames[firstLetterUpperCase]++;
     } else {
       greetedNames[firstLetterUpperCase]++;
     }
