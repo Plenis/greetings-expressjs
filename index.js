@@ -2,9 +2,9 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const greetingOpp = require("./greetings");
-const flash = require('express-flash');
-const session = require('express-session');
-let greetedNames = "";
+const flash = require("express-flash");
+const session = require("express-session");
+let messageDisplay = "";
 
 const app = express();
 const greetings = greetingOpp();
@@ -20,15 +20,17 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-  // initialise session middleware - flash-express depends on it
-  app.use(session({
-    secret : "message",
+// initialise session middleware - flash-express depends on it
+app.use(
+  session({
+    secret: "message",
     resave: false,
     saveUninitialized: true
-  }));
+  })
+);
 
-  // initialise the flash middleware
-  app.use(flash());
+// initialise the flash middleware
+app.use(flash());
 
 app.use(express.static("public"));
 
@@ -36,42 +38,63 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-app.get("/", function(req, res) {  
+app.get("/", function(req, res) {
+  // console.log(req.body);
   const counter = greetings.nameCounter();
-  if(greetedNames !== ""){
-    res.redirect("/", counter);
-  }
-  res.render("index", {
-    greetedNames,
+  messageDisplay = greetings.greetMessage();
+  console.log("messageDisplay: " + messageDisplay)
+  console.log("counter: " + counter)
+   res.render("index", {
+    messageDisplay,
     counter
   });
 });
 
-app.post("/greeting", function(req, res) {
+app.post("/greeting", function(req, res){
   const personName = req.body.personsName;
   const myLang = req.body.myLang;
-  const greetDisplay = greetings.greet(personName, myLang);
 
-if(personName === '' && myLang === undefined){
-  req.flash('info', 'Please enter and name and choose a language');
-  res.redirect('/');
-}
-  else if(personName === ''){
-    req.flash('info', 'Please enter a name!');
-    res.redirect('/');
-  }
-  else if(myLang === undefined){
-    req.flash('info', 'Please choose a language!');
-    res.redirect('/');
+   greetDisplay = greetings.greet(personName, myLang);
 
-  }else{
-  greetedNames  = greetDisplay;
-  res.redirect('/');
+  // greetedNames = greetDisplay;
+  // console.log(greetedNames + " lolo")
+  
+   if (personName === "" && myLang === undefined) {
+    req.flash("info", "Please enter and name and choose a language");
+    res.redirect("/");
+  } else if (personName === "") {
+    req.flash("info", "Please enter a name!");
+    res.redirect("/");
+  } else if (myLang === undefined) {
+    req.flash("info", "Please choose a language!");
+    res.redirect("/");
   }
+  res.redirect("/")
 })
 
+// app.post("/greeting", function(req, res) {
+//   const personName = req.body.personsName;
+//   const myLang = req.body.myLang;
+//   const greetDisplay = greetings.greetMessage();
+//   console.log(greetDisplay)
 
-const PORT = process.env.PORT || 7800;
+// if (personName === "" && myLang === undefined) {
+//   req.flash("info", "Please enter and name and choose a language");
+//   res.redirect("/");
+// } else if (personName === "") {
+//   req.flash("info", "Please enter a name!");
+//   res.redirect("/");
+// } else if (myLang === undefined) {
+//   req.flash("info", "Please choose a language!");
+//   res.redirect("/");
+
+//   } else {
+//    res.render("index",{greetedNames : greetDisplay});
+//     res.redirect("/");
+//   }
+// });
+
+const PORT = process.env.PORT || 3200;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);

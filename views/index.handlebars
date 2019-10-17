@@ -8,27 +8,27 @@
     <div class='col-12 center'>
       <h1> Name: <input type="text" name="personsName" class="personsName" value="" placeholder="Enter your name here"></h1>
 
-      <span><input type="radio" class="lang1" name="myLang" value="isiXhosa"> isiXhosa</span>
+      <span><input type="radio" class="myLang" name="myLang" value="isiXhosa"> isiXhosa</span>
 
-      <span> <input type="radio" class="lang2" name="myLang" value="English"> English</span>
+      <span> <input type="radio" class="myLang" name="myLang" value="English"> English</span>
 
-      <span> <input type="radio" class="lang3" name="myLang" value="Afrikaans"> Afrikaans</span>
+      <span> <input type="radio" class="myLang" name="myLang" value="Afrikaans"> Afrikaans</span>
       
       <br> <br> <input type="submit" class="greetBtn" value="Greet!">
     </div>
   </div>
   <div class='row'>
     <div class='col-12 center'>
-  <div class="info">
-    <h5> {{messages.info}}</h5>
-</div>
       <p class='counter'>{{counter}}</p>
     </div>
   </div>
 
   <div class='row'>
     <div id='greeting-text' class='col-12 center'>
-  <b style="color: blue"> {{greetedNames}} </b>
+  <b style="color: blue"> {{messageDisplay}} </b>
+    <div class="info">
+    <h5> {{messages.info}}</h5>
+</div>
     </div>
     </form>
   </div>
