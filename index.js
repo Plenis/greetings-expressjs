@@ -7,6 +7,8 @@ const session = require("express-session");
 let messageDisplay = "";
 
 const app = express();
+
+
 const greetings = greetingOpp();
 
 app.engine(
@@ -39,11 +41,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", function(req, res) {
-  // console.log(req.body);
   const counter = greetings.nameCounter();
   messageDisplay = greetings.greetMessage();
-  console.log("messageDisplay: " + messageDisplay)
-  console.log("counter: " + counter)
+  // console.log("messageDisplay: " + messageDisplay)
+  // console.log("counter: " + counter)
    res.render("index", {
     messageDisplay,
     counter
@@ -55,9 +56,6 @@ app.post("/greeting", function(req, res){
   const myLang = req.body.myLang;
 
    greetDisplay = greetings.greet(personName, myLang);
-
-  // greetedNames = greetDisplay;
-  // console.log(greetedNames + " lolo")
   
    if (personName === "" && myLang === undefined) {
     req.flash("info", "Please enter and name and choose a language");
@@ -72,29 +70,16 @@ app.post("/greeting", function(req, res){
   res.redirect("/")
 })
 
-// app.post("/greeting", function(req, res) {
-//   const personName = req.body.personsName;
-//   const myLang = req.body.myLang;
-//   const greetDisplay = greetings.greetMessage();
-//   console.log(greetDisplay)
+app.get("/greeted", function(req, res) {
 
-// if (personName === "" && myLang === undefined) {
-//   req.flash("info", "Please enter and name and choose a language");
-//   res.redirect("/");
-// } else if (personName === "") {
-//   req.flash("info", "Please enter a name!");
-//   res.redirect("/");
-// } else if (myLang === undefined) {
-//   req.flash("info", "Please choose a language!");
-//   res.redirect("/");
+  var namesGreeted = greetings.greet();
+  
+  res.render("greeted", { greetedNames: namesGreeted });
+});
 
-//   } else {
-//    res.render("index",{greetedNames : greetDisplay});
-//     res.redirect("/");
-//   }
-// });
+//port
 
-const PORT = process.env.PORT || 3200;
+const PORT = process.env.PORT || 3600;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);

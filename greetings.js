@@ -1,11 +1,48 @@
-function greetingOpp() {
+module.exports = function greetingOpp() {
   var greetedNames = {};
   let message = "";
+  var greeter;
 
-  function greet(name, lang) {
+  const pg = require("pg");
+  const Pool = pg.Pool;
+
+  // we are using a special test database for the tests
+  const connectionString =
+    "postgresql://sino:codex123@localhost:5432/greeting_opp";
+
+  const pool = new Pool({
+    connectionString
+  });
+
+  async function greet(name, lang) {
     var firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
-    // var firstLetterUpper = name.toUpperCase();
-    if(!name || !lang ){
+
+    greeter = await pool.query(
+      "select distinct greet_name, greet_count from greeted_names"
+    );
+
+    if (firstLetterUpperCase.length > 0) {
+      var storage = await pool.query(
+        "select * from greeted_names where greet_name = $1",
+        [firstLetterUpperCase]
+      );
+
+      if (storage.rowCount === 1) {
+        await pool.query(
+          "UPDATE greeted_names greet_name SET greet_count = greet_count + 1 WHERE greet_name = $1",
+          [firstLetterUpperCase]
+        );
+      } else {
+        await pool.query(
+          "insert into greeted_names (greet_name, greet_count) values ($1, $2)",
+          [firstLetterUpperCase, 1]
+        );
+      }
+    }
+
+    console.log(greeter.rows);
+
+    if (!name || !lang) {
       return;
     }
     if (greetedNames[firstLetterUpperCase] === undefined) {
@@ -21,15 +58,24 @@ function greetingOpp() {
     } else if (lang === "Afrikaans") {
       message = "Awe, " + firstLetterUpperCase + "!";
     }
-
   }
 
-  function nameCounter() {
-    var greetedArray = Object.keys(greetedNames);
-    return greetedArray.length;
+  async function tableData() {
+    await pool.query(
+      "select distinct greet_name, greet_count from greeted_names"
+    );
+    return greeter.rows;
   }
 
-  function greetMessage(){
+  async function nameCounter() {
+    var counter = await pool.query("select count(*) from greeted_names");
+    for (var index = 0; index < counter.rows.length; index++) {
+      var counterCheck = counter.rows[index];
+    }
+    console.log(counterCheck.count);
+  }
+
+  function greetMessage() {
     return message;
   }
 
@@ -41,8 +87,7 @@ function greetingOpp() {
     greet,
     storedNames,
     nameCounter,
-    greetMessage
+    greetMessage,
+    tableData
   };
-}
-
-module.exports = greetingOpp;
+};
