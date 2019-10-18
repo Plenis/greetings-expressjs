@@ -43,8 +43,7 @@ app.use(bodyParser.json());
 app.get("/", function(req, res) {
   const counter = greetings.nameCounter();
   messageDisplay = greetings.greetMessage();
-  // console.log("messageDisplay: " + messageDisplay)
-  // console.log("counter: " + counter)
+
    res.render("index", {
     messageDisplay,
     counter
@@ -70,16 +69,16 @@ app.post("/greeting", function(req, res){
   res.redirect("/")
 })
 
-app.get("/greeted", function(req, res) {
-
-  var namesGreeted = greetings.greet();
+app.get("/greeted", async function(req, res) {
   
-  res.render("greeted", { greetedNames: namesGreeted });
+  res.render("greeted", {
+     greetedNames: await greetings.tableData()
+    });
 });
 
 //port
 
-const PORT = process.env.PORT || 3600;
+const PORT = process.env.PORT || 3333;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);

@@ -40,8 +40,6 @@ module.exports = function greetingOpp() {
       }
     }
 
-    console.log(greeter.rows);
-
     if (!name || !lang) {
       return;
     }
