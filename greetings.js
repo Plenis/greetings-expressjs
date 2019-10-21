@@ -1,6 +1,6 @@
 module.exports = function greetingOpp() {
   var greetedNames = {};
-  let message = "";
+  var message;
   var greeter;
 
   const pg = require("pg");
@@ -62,19 +62,17 @@ module.exports = function greetingOpp() {
     await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
     );
+    console.log(greeter.rows)
     return greeter.rows;
   }
 
   async function nameCounter() {
-    var counter = await pool.query("select count(*) from greeted_names");
-    for (var index = 0; index < counter.rows.length; index++) {
-      var counterCheck = counter.rows[index];
-    }
-    console.log(counterCheck.count);
+    var counter = await pool.query("select * from greeted_names");
+    return counter.rows.length;
   }
 
-  function greetMessage() {
-    return message;
+  async function greetMessage() {
+    return await message;
   }
 
   function storedNames() {

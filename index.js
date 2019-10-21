@@ -8,7 +8,6 @@ let messageDisplay = "";
 
 const app = express();
 
-
 const greetings = greetingOpp();
 
 app.engine(
@@ -40,43 +39,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-app.get("/", function(req, res) {
-  const counter = greetings.nameCounter();
-  messageDisplay = greetings.greetMessage();
-
-   res.render("index", {
-    messageDisplay,
-    counter
+app.get("/", async function(req, res) {
+  
+   messageDisplay =  await greetings.greetMessage();
+   
+  res.render("index", {
+    counter: await greetings.nameCounter(),
+    messageDisplay
   });
 });
 
-app.post("/greeting", function(req, res){
+app.post("/greeting", async function(req, res) {
   const personName = req.body.personsName;
   const myLang = req.body.myLang;
 
-   greetDisplay = greetings.greet(personName, myLang);
-  
-   if (personName === "" && myLang === undefined) {
-    req.flash("info", "Please enter and name and choose a language");
-    res.redirect("/");
-  } else if (personName === "") {
-    req.flash("info", "Please enter a name!");
-    res.redirect("/");
-  } else if (myLang === undefined) {
-    req.flash("info", "Please choose a language!");
-    res.redirect("/");
-  }
-  res.redirect("/")
-})
+ await greetings.greetMessage(personName);
 
-app.get("/greeted", async function(req, res) {
-  
-  res.render("greeted", {
-     greetedNames: await greetings.tableData()
-    });
+  greetDisplay = greetings.greet(personName, myLang);
+
+  if (personName === "" && myLang === undefined) {
+    await req.flash("info", "Please enter and name and choose a language");
+  } 
+  else if (personName === "") {
+    await req.flash("info", "Please enter a name!");
+  } 
+  else if (myLang === undefined) {
+    await req.flash("info", "Please choose a language!");
+  }
+  res.redirect("/");
 });
 
-//port
+app.get("/greeted", async function(req, res) {
+  res.render("greeted", {
+    greetedNames: await greetings.tableData()
+  });
+});
+
 
 const PORT = process.env.PORT || 3333;
 
