@@ -40,9 +40,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", async function(req, res) {
-  
-   messageDisplay =  await greetings.greetMessage();
-   
+  messageDisplay = await greetings.greetMessage();
   res.render("index", {
     counter: await greetings.nameCounter(),
     messageDisplay
@@ -53,19 +51,18 @@ app.post("/greeting", async function(req, res) {
   const personName = req.body.personsName;
   const myLang = req.body.myLang;
 
- await greetings.greetMessage(personName);
+  greetings.greetMessage(personName);
 
-  greetDisplay = greetings.greet(personName, myLang);
+  greetDisplay = await greetings.greet(personName, myLang);
 
   if (personName === "" && myLang === undefined) {
     await req.flash("info", "Please enter and name and choose a language");
-  } 
-  else if (personName === "") {
+  } else if (personName === "") {
     await req.flash("info", "Please enter a name!");
-  } 
-  else if (myLang === undefined) {
+  } else if (myLang === undefined) {
     await req.flash("info", "Please choose a language!");
   }
+
   res.redirect("/");
 });
 
@@ -75,8 +72,7 @@ app.get("/greeted", async function(req, res) {
   });
 });
 
-
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 2300;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);

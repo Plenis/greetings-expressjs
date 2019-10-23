@@ -1,10 +1,14 @@
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener("DOMContentLoaded", function() {
+  let errorMessage = document.querySelector(".info");
+  let greetMessage = document.querySelector(".greeting-text");
 
-let messageElem = document.querySelector('.info');
-
-if(messageElem === ''){
-    setTimeout(function(){
-messageElem.innerHTML = '';
+  if (errorMessage === "") {
+    setTimeout(function() {
+      errorMessage.innerHTML = "";
     }, 3000);
-};
+  } else if (greetMessage === "") {
+    setTimeout(function() {
+      greetMessage.innerHTML = "";
+    }, 3000);
+  }
 });

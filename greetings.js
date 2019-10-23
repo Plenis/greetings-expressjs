@@ -53,6 +53,7 @@ module.exports = function greetingOpp() {
       message = "Molo, " + firstLetterUpperCase + "!";
     } else if (lang === "English") {
       message = "Hello, " + firstLetterUpperCase + "!";
+      
     } else if (lang === "Afrikaans") {
       message = "Awe, " + firstLetterUpperCase + "!";
     }
@@ -71,8 +72,8 @@ module.exports = function greetingOpp() {
     return counter.rows.length;
   }
 
-  async function greetMessage() {
-    return await message;
+   function greetMessage() {
+    return  message;
   }
 
   function storedNames() {
