@@ -8,7 +8,7 @@ module.exports = function greetingOpp() {
 
   // we are using a special test database for the tests
   const connectionString =
-    "postgresql://sino:codex123@localhost:5432/greeting_opp";
+   process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/greeting_opp"
 
   const pool = new Pool({
     connectionString
