@@ -1,18 +1,7 @@
-module.exports = function greetingOpp() {
+module.exports = function greetingOpp(pool) {
   var greetedNames = {};
   var message;
   var greeter;
-
-  const pg = require("pg");
-  const Pool = pg.Pool;
-
-  // we are using a special test database for the tests
-  const connectionString =
-   process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/greeting_opp"
-
-  const pool = new Pool({
-    connectionString
-  });
 
   async function greet(name, lang) {
     var firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);

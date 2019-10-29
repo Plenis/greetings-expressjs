@@ -72,7 +72,7 @@ app.get("/greeted", async function(req, res) {
   });
 });
 
-const PORT = process.env.PORT || 2300;
+const PORT = process.env.PORT || 2330;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);
