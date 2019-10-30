@@ -57,7 +57,7 @@ module.exports = function greetingOpp(pool) {
   }
 
   async function nameCounter() {
-    var counter = await pool.query("select * from greeted_names");
+   var counter = await pool.query("select * from greeted_names");
     return counter.rows.length;
   }
 
