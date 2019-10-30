@@ -1,3 +1,16 @@
 language: node_js
-node_js:
+
+env:
+  - DATABASE_URL=postgresql://sino:codex123@localhost:5432/greeting_opp
+
+node_js:  
   - "8.10.0"
+
+before_script:
+  - psql -c 'create database  greeting_opp;' -U postgres
+  - psql -U postgres -d greeting_opp -a -f tables.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2
