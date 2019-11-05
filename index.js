@@ -14,16 +14,18 @@ const Pool = pg.Pool;
 // should we use a SSL connection
 let useSSL = false;
 let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local){
-    useSSL = true;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
 }
 // which db connection to use
-const connectionString = process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/greeting_opp";
+const connectionString =
+  process.env.DATABASE_URL ||
+  "postgresql://sino:codex123@localhost:5432/greeting_opp";
 
 const pool = new Pool({
-    connectionString,
-    ssl : useSSL
-  });
+  connectionString,
+  ssl: useSSL
+});
 
 const greetings = greetingOpp(pool);
 
@@ -65,16 +67,15 @@ app.get("/", async function(req, res) {
 });
 
 app.post("/greeting", async function(req, res) {
-  var personsName = req.body.personsName.replace(/[\W\d_]/g, '');
+  var personsName = req.body.personsName.replace(/[\W\d_]/g, "");
   const myLang = req.body.myLang;
-  
 
   greetings.greetMessage(personsName);
 
   greetDisplay = await greetings.greet(personsName, myLang);
 
   if (personsName === "" && myLang === undefined) {
-    await req.flash("info", "Please enter and name and choose a language");
+    await req.flash("info", "Please enter and name and choose a language!");
   } else if (personsName === "") {
     await req.flash("info", "Please enter a name!");
   } else if (myLang === undefined) {
@@ -90,31 +91,28 @@ app.get("/greeted", async function(req, res) {
   });
 });
 
-// app.get("/counter", async function (req, res){
-//   res.render("greeted", await greetings.nameCounter())
-// })
-
-app.get("/counter/:user", async function(req, res){
+app.get("/counter/:user", async function(req, res) {
   let name = req.params.user;
   let user = await greetings.nameGreeted(name);
 
-  res.render("counter",{
-  userInfo: user
-  })
-})
-
-app.post("/clear", async function(req, res) {
- await greetings.clearData()
-res.redirect('/')
+  res.render("counter", {
+    userInfo: user
+  });
 });
 
-app.get('/backToHome', async function(req, res){
-  res.redirect('/')
-})
+app.post("/clear", async function(req, res) {
+  await greetings.clearData();
+  res.redirect("/");
+});
 
-app.get('/backToGreeted', async function(req, res){
-  res.redirect('/greeted')
-})
+app.get("/backToHome", async function(req, res) {
+  res.redirect("/");
+});
+
+app.get("/backToGreeted", async function(req, res) {
+  res.redirect("/greeted");
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {

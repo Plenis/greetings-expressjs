@@ -68,7 +68,6 @@ describe('The basic greeting web app', function(){
         assert.equal(counter, 1);
     });
 
-
     it('should count duplicated name entries as one' , async function(){
         let input = GreetingOpp(pool);
          await input.greet('Sino')
@@ -78,6 +77,16 @@ describe('The basic greeting web app', function(){
         let counter = await input.nameCounter();
         assert.equal(counter, 1);
     })
+
+    it('should not count entries with numbers' , async function(){
+        let input = GreetingOpp(pool);
+        await input.greet('Sin1o');
+        await input.greet('S22o');
+        await input.greet('9876');
+
+        let counter = await input.nameCounter();
+        assert.equal(counter, 0);
+    });
 
         it('should show a counter of how many people have been greeted if different 6 names are entered greeted', async function(){
         let input = GreetingOpp(pool);

@@ -2,10 +2,10 @@ module.exports = function greetingOpp(pool) {
   var greetedNames = {};
   var message;
   var greeter;
-  let firstLetterUpperCase = ''
+  let firstLetterUpperCase = "";
 
   async function greet(name, lang) {
-     firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
+    firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
 
     greeter = await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
@@ -43,7 +43,6 @@ module.exports = function greetingOpp(pool) {
       message = "Molo, " + firstLetterUpperCase + "!";
     } else if (lang === "English") {
       message = "Hello, " + firstLetterUpperCase + "!";
-      
     } else if (lang === "Afrikaans") {
       message = "Awe, " + firstLetterUpperCase + "!";
     }
@@ -53,29 +52,30 @@ module.exports = function greetingOpp(pool) {
     await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
     );
-    console.log(greeter.rows)
+    console.log(greeter.rows);
     return greeter.rows;
   }
 
   async function nameGreeted(eachName) {
-    let names = await pool.query("SELECT * FROM greeted_names where greet_name = $1", [eachName]);
+    let names = await pool.query(
+      "SELECT * FROM greeted_names where greet_name = $1",
+      [eachName]
+    );
     var userName = names.rows;
-    console.log('name', userName);
-   var  name = userName[0].greet_name;
-   var count =  userName[0].greet_count;
-   console.log('nameCOunter:' , name, count)
-    return {name, count}
-}
+
+    var name = userName[0].greet_name;
+    var count = userName[0].greet_count;
+
+    return { name, count };
+  }
 
   async function nameCounter() {
-  var counter = await pool.query("select * from greeted_names");
-  // console.log('counter:', counter);
-  
+    var counter = await pool.query("select * from greeted_names");
     return counter.rows.length;
   }
 
-   function greetMessage() {
-    return  message;
+  function greetMessage() {
+    return message;
   }
 
   function storedNames() {
@@ -83,12 +83,11 @@ module.exports = function greetingOpp(pool) {
   }
 
   async function clearData() {
-    await pool.query('DELETE FROM greeted_names');
-    greeter = '';
-    message = '';
+    await pool.query("DELETE FROM greeted_names");
+    greeter = "";
+    message = "";
     greetedNames = {};
-    
-}
+  }
 
   return {
     greet,

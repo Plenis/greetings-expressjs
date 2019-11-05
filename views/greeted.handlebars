@@ -2,19 +2,20 @@
     <h1>Greeted Names</h1>
     <table>
         <tr>
-       {{!-- <th>Greeted Name + records.</th> --}}
+            {{!-- <th>Greeted Name + records.</th> --}}
         </tr>
-{{#each greetedNames}}
-<tr>
-    <td style="color: black">See how many times<a href="/counter/{{greet_name}}" style="color:blue">   {{greet_name}}    </a>has been greeted.</td>
-</tr>
-{{/each}}
+        {{#each greetedNames}}
+        <tr>
+            <td style="color: black">See how many times<a href="/counter/{{greet_name}}" style="color:blue">
+                    {{greet_name}} </a>has been greeted.</td>
+        </tr>
+        {{/each}}
     </table>
-    
-<br>
-<form action="/backToHome" method="">
-     <button type="submit" class="backBtn" value="backBtn">
+
+    <br>
+    <form action="/backToHome" method="">
+        <button type="submit" class="backBtn" value="backBtn">
             Back To Home
         </button>
-        </form>
+    </form>
 </div>
