@@ -6,12 +6,15 @@
         </tr>
 {{#each greetedNames}}
 <tr>
-    <td style="color: black">See how many times<a href="/counter/{{greet_name}}" style="color:blue"> {{greet_name}} </a>has been greeted.</td>
+    <td style="color: black">See how many times<a href="/counter/{{greet_name}}" style="color:blue">   {{greet_name}}    </a>has been greeted.</td>
 </tr>
 {{/each}}
     </table>
     
 <br>
-<form action="/backToHome" method="get"></form>
-<button type="submit" class="back" value="back">Back To Home</button>
+<form action="/backToHome" method="">
+     <button type="submit" class="backBtn" value="backBtn">
+            Back To Home
+        </button>
+        </form>
 </div>

@@ -58,14 +58,19 @@ module.exports = function greetingOpp(pool) {
   }
 
   async function nameGreeted(eachName) {
-    let names = await pool.query("SELECT * FROM greeted_names where greet_name =$1", [eachName]);
+    let names = await pool.query("SELECT * FROM greeted_names where greet_name = $1", [eachName]);
     var userName = names.rows;
-    return userName.rows;
-    
+    console.log('name', userName);
+   var  name = userName[0].greet_name;
+   var count =  userName[0].greet_count;
+   console.log('nameCOunter:' , name, count)
+    return {name, count}
 }
 
   async function nameCounter() {
   var counter = await pool.query("select * from greeted_names");
+  // console.log('counter:', counter);
+  
     return counter.rows.length;
   }
 
@@ -80,6 +85,9 @@ module.exports = function greetingOpp(pool) {
   async function clearData() {
     await pool.query('DELETE FROM greeted_names');
     greeter = '';
+    message = '';
+    greetedNames = {};
+    
 }
 
   return {

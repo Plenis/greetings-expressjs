@@ -95,11 +95,11 @@ app.get("/greeted", async function(req, res) {
 // })
 
 app.get("/counter/:user", async function(req, res){
-  let name = req.params.userInfo;
-  let userInfo = await greetings.nameGreeted(name);
+  let name = req.params.user;
+  let user = await greetings.nameGreeted(name);
 
   res.render("counter",{
-  userInfo
+  userInfo: user
   })
 })
 
@@ -113,9 +113,9 @@ app.get('/backToHome', async function(req, res){
 })
 
 app.get('/backToGreeted', async function(req, res){
-  res.redirect('/')
+  res.redirect('/greeted')
 })
-const PORT = process.env.PORT || 2330;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
   console.log("App has started", PORT);
