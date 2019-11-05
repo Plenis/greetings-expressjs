@@ -1,25 +1,24 @@
 language: node_js
 
 env:
-  - DATABASE_URL=postgresql://sino:codex123@localhost:5432/greeted_names
+  - DATABASE_URL=postgresql://postgres@localhost:5432/greeted_opp
 
 node_js:  
   - "8.10.0"
 
 before_script:
-  - psql -c 'create database greeted_names;' -U postgres
-  - psql -U postgres -d greeted_names -a -f tables.sql
-
-addons:
-    apt:
-    packages:
-    - postgresql-server-dev-9.2
-
+  - psql -c 'create database greeted_users;' -U postgres
+  - psql -U postgres -d greeted_users -a -f database-table.sql
 
 services:
   - postgresql
-
-  before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-
+  
+addons:
+  apt:
+    sources:
+    - precise-pgdg-9.5
+    packages:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+  postgresql: 9.5
   
