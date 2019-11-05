@@ -1,15 +1,17 @@
-<div class="row">
+<div class="namesTable">
     <h1>Greeted Names</h1>
     <table>
         <tr>
-        <th>Greet Name</th>
-        <th>Greet Count</th>
+       {{!-- <th>Greeted Name + records.</th> --}}
         </tr>
 {{#each greetedNames}}
 <tr>
-    <td>{{greet_name}}</td>
-    <td>{{greet_count}}</td>
+    <td style="color: black">See how many times<a href="/counter/{{greet_name}}" style="color:blue"> {{greet_name}} </a>has been greeted.</td>
 </tr>
 {{/each}}
     </table>
+    
+<br>
+<form action="/backToHome" method="get"></form>
+<button type="submit" class="back" value="back">Back To Home</button>
 </div>

@@ -14,7 +14,12 @@
 
       <span> <input type="radio" class="myLang" name="myLang" value="Afrikaans"> Afrikaans</span>
       
-      <br> <br> <input type="submit" class="greetBtn" value="Greet!"><input type="submit" class="greetBtn" value="Clear!">
+      <br> <br> <input type="submit" class="greetBtn" value="Greet!">
+       </form>
+
+      <form action="/clear" method="POST">
+      <input type="submit" class="clearBtn" value="Clear!">
+      </form>
     </div>
   </div>
 
@@ -24,7 +29,8 @@
     <div class="info">
     <h5> {{messages.info}}</h5>
 </div>
+<form action="/counter:/user" method="get">
  <a style="color:rgb(255, 0, 128)" href="/greeted">Greeted Names:</a> {{counter}}
     </div>
-    </form>
+   
   </div>

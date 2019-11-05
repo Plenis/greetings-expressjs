@@ -8,7 +8,24 @@ let messageDisplay = "";
 
 const app = express();
 
-const greetings = greetingOpp();
+const pg = require("pg");
+const Pool = pg.Pool;
+
+// should we use a SSL connection
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local){
+    useSSL = true;
+}
+// which db connection to use
+const connectionString = process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/greeting_opp";
+
+const pool = new Pool({
+    connectionString,
+    ssl : useSSL
+  });
+
+const greetings = greetingOpp(pool);
 
 app.engine(
   "handlebars",
@@ -48,16 +65,17 @@ app.get("/", async function(req, res) {
 });
 
 app.post("/greeting", async function(req, res) {
-  const personName = req.body.personsName;
+  var personsName = req.body.personsName.replace(/[\W\d_]/g, '');
   const myLang = req.body.myLang;
+  
 
-  greetings.greetMessage(personName);
+  greetings.greetMessage(personsName);
 
-  greetDisplay = await greetings.greet(personName, myLang);
+  greetDisplay = await greetings.greet(personsName, myLang);
 
-  if (personName === "" && myLang === undefined) {
+  if (personsName === "" && myLang === undefined) {
     await req.flash("info", "Please enter and name and choose a language");
-  } else if (personName === "") {
+  } else if (personsName === "") {
     await req.flash("info", "Please enter a name!");
   } else if (myLang === undefined) {
     await req.flash("info", "Please choose a language!");
@@ -72,6 +90,31 @@ app.get("/greeted", async function(req, res) {
   });
 });
 
+// app.get("/counter", async function (req, res){
+//   res.render("greeted", await greetings.nameCounter())
+// })
+
+app.get("/counter/:user", async function(req, res){
+  let name = req.params.userInfo;
+  let userInfo = await greetings.nameGreeted(name);
+
+  res.render("counter",{
+  userInfo
+  })
+})
+
+app.post("/clear", async function(req, res) {
+ await greetings.clearData()
+res.redirect('/')
+});
+
+app.get('/backToHome', async function(req, res){
+  res.redirect('/')
+})
+
+app.get('/backToGreeted', async function(req, res){
+  res.redirect('/')
+})
 const PORT = process.env.PORT || 2330;
 
 app.listen(PORT, function() {

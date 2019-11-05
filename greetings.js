@@ -2,9 +2,10 @@ module.exports = function greetingOpp(pool) {
   var greetedNames = {};
   var message;
   var greeter;
+  let firstLetterUpperCase = ''
 
   async function greet(name, lang) {
-    var firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
+     firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
 
     greeter = await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
@@ -56,8 +57,15 @@ module.exports = function greetingOpp(pool) {
     return greeter.rows;
   }
 
+  async function nameGreeted(eachName) {
+    let names = await pool.query("SELECT * FROM greeted_names where greet_name =$1", [eachName]);
+    var userName = names.rows;
+    return userName.rows;
+    
+}
+
   async function nameCounter() {
-   var counter = await pool.query("select * from greeted_names");
+  var counter = await pool.query("select * from greeted_names");
     return counter.rows.length;
   }
 
@@ -69,11 +77,18 @@ module.exports = function greetingOpp(pool) {
     return greetedNames;
   }
 
+  async function clearData() {
+    await pool.query('DELETE FROM greeted_names');
+    greeter = '';
+}
+
   return {
     greet,
     storedNames,
     nameCounter,
     greetMessage,
-    tableData
+    tableData,
+    nameGreeted,
+    clearData
   };
 };

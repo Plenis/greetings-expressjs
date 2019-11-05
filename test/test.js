@@ -7,9 +7,15 @@ const Pool = pg.Pool;
 const connectionString =
  process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/greeting_opp"
 
-const pool = new Pool({
-  connectionString
-});
+ let useSSL = false;
+ let local = process.env.LOCAL || false;
+ if (process.env.DATABASE_URL && !local) {
+     useSSL = true;
+ }
+ const pool = new Pool({
+     connectionString,
+     ssl: useSSL
+ });
 
 
 describe('The basic greeting web app', function(){
