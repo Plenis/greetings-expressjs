@@ -1,14 +1,14 @@
 language: node_js
 
 env:
-  - DATABASE_URL=postgresql://sino:codex123@localhost:5432/greeting_opp
+  - DATABASE_URL=postgresql://sino:codex123@localhost:5432/greeted_names
 
 node_js:  
   - "8.10.0"
 
 before_script:
-  - psql -c 'create database greeting_opp;' -U postgres
-  - psql -U postgres -d greeting_opp -a -f tables.sql
+  - psql -c 'create database greeted_names;' -U postgres
+  - psql -U postgres -d greeted_names -a -f tables.sql
 
 addons:
     apt:
