@@ -137,7 +137,7 @@ describe('Greeting app testing basic functionality + database testing', function
     });
 
     it('should clear all data once clear option selected', async function () {
-        await pool.query("delete from greeted_names;");
+        
     
         let input = GreetingOpp(pool);
         await input.greet('Lisa');
