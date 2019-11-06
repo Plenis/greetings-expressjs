@@ -5,7 +5,7 @@ module.exports = function greetingOpp(pool) {
   let firstLetterUpperCase = "";
 
   async function greet(name, lang) {
-    firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1);
+    firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1).replace(/[\W\d_]/g, '');
 
     greeter = await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
@@ -31,11 +31,11 @@ module.exports = function greetingOpp(pool) {
     }
 
     if (!name || !lang) {
-      return;
+      return 0;
     }
-    if (greetedNames[firstLetterUpperCase] === undefined) {
-      greetedNames[firstLetterUpperCase]++;
-    } else {
+    if (greetedNames[firstLetterUpperCase] === '') {
+      greetedNames[firstLetterUpperCase] = 0;
+    } else{
       greetedNames[firstLetterUpperCase]++;
     }
 

@@ -67,7 +67,7 @@ app.get("/", async function(req, res) {
 });
 
 app.post("/greeting", async function(req, res) {
-  var personsName = req.body.personsName.replace(/[\W\d_]/g, "");
+  var personsName = req.body.personsName.replace(/[\W\d_]/g, '');
   const myLang = req.body.myLang;
 
   greetings.greetMessage(personsName);
@@ -75,9 +75,9 @@ app.post("/greeting", async function(req, res) {
   greetDisplay = await greetings.greet(personsName, myLang);
 
   if (personsName === "" && myLang === undefined) {
-    await req.flash("info", "Please enter and name and choose a language!");
+    await req.flash("info", "Please enter a valid name and choose a language!");
   } else if (personsName === "") {
-    await req.flash("info", "Please enter a name!");
+    await req.flash("info", "Please enter a valid name!");
   } else if (myLang === undefined) {
     await req.flash("info", "Please choose a language!");
   }
