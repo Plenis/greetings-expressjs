@@ -133,7 +133,7 @@ describe('Greeting app testing basic functionality + database testing', function
         await input.greet('Amahle');
 
         let greetDisplay = await pool.query('SELECT greet_name, greet_count FROM greeted_names');
-        assert.deepEqual(greetDisplay.rows, [{ greet_name: 'Lisa', greet_count: 2 }, { greet_name: 'Sammy', greet_count: 1 }, { greet_name: 'Amahle', greet_count: 6 }]);
+        assert.deepEqual(greetDisplay.rows, [{ greet_count: 2, greet_name: 'Lisa' }, { greet_count: 1, greet_name: 'Sammy' }, { greet_count: 6, greet_name: 'Amahle' }]);
     });
 
     it('should clear all data once clear option selected', async function () {
