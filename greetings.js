@@ -31,7 +31,7 @@ module.exports = function greetingOpp(pool) {
     }
 
     if (!name || !lang) {
-      return 0;
+      return;
     }
     if (greetedNames[firstLetterUpperCase] === '') {
       greetedNames[firstLetterUpperCase] = 0;
