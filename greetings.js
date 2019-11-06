@@ -7,6 +7,10 @@ module.exports = function greetingOpp(pool) {
   async function greet(name, lang) {
     firstLetterUpperCase = name.toUpperCase().charAt(0) + name.slice(1).replace(/[\W\d_]/g, '');
 
+    if (!name || !lang) {
+      return;
+    }
+    
     greeter = await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
     );
@@ -30,15 +34,6 @@ module.exports = function greetingOpp(pool) {
       }
     }
 
-    if (!name || !lang) {
-      return;
-    }
-    if (greetedNames[firstLetterUpperCase] === '') {
-      greetedNames[firstLetterUpperCase] = 0;
-    } else{
-      greetedNames[firstLetterUpperCase]++;
-    }
-
     if (lang === "isiXhosa") {
       message = "Molo, " + firstLetterUpperCase + "!";
     } else if (lang === "English") {
@@ -49,7 +44,7 @@ module.exports = function greetingOpp(pool) {
   }
 
   async function tableData() {
-    await pool.query(
+    greeter = await pool.query(
       "select distinct greet_name, greet_count from greeted_names"
     );
     console.log(greeter.rows);
